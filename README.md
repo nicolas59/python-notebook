@@ -14,3 +14,61 @@
 6. Lancer jupyter-lab
 
 `jupyter-lab`
+
+
+## Utilisation base de données
+### Pre requis
+Installation de docker ou de podman.
+
+Les exemples suivants se base sur l'utilisation de *podman*.
+
+### Installation mariabd
+
+Installation lib python
+
+` pip3 install mysql-connector-python`
+
+Lancement du container mariadb
+
+```
+$ podman run -d  --name mariadb \
+   --env MARIADB_USER=user \
+   --env MARIADB_PASSWORD=secret \
+   --env MARIADB_ROOT_PASSWORD=secret-pw   \
+   --env MARIADB_DATABASE=demo \
+   -p 3306:3306 \
+   mariadb:latest
+```
+
+### Installation postgres
+
+Installation lib python
+
+` pip install psycopg2-binary`
+
+Lancement du container postgres
+
+```
+$ podman run -d --name postgres  \
+    -e POSTGRES_USER=user \
+    -e POSTGRES_PASSWORD=secret  \
+    -e POSTGRES_DB=demo \
+    -p 5432:5432 \
+    postgres:latest
+```
+
+### Arret et suppression
+
+``` 
+podman stop mariadb \
+ && podman rm mariadb \
+ && podman rmi mariadb \
+ && podman image prune
+```
+
+``` 
+podman stop postgres \
+ && podman rm postgres \
+ && podman rmi postgres \
+ && podman image prune
+```
